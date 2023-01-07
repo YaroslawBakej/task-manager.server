@@ -31,3 +31,4 @@ async function checkUserByPwdDB(pwd) {
 module.exports = { getUserByEmailDB, createUserDB,checkUserByPwdDB }
 
 // not full
+// commit
