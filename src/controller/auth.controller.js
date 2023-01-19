@@ -14,7 +14,7 @@ route.post('/reg', async (res, req) => {
 route.post('/auth', async (res, req) => {
     try {
         const { email, pwd } = req.body
-        const dataAuth = await doAuthorisation( email, pwd)
+        await doAuthorization(email, pwd)
         res.status(200).send(dataAuth)
     } catch (error) {
         res.status(404).send(error.message)
