@@ -1,5 +1,5 @@
-
-const { pool } = require('../DB')
+import {pool} from '../DB'
+import {iUser} from '..//interfaces/interfaces'
 
 async function getUsersDB() {
     const client = await pool.connect()
@@ -8,14 +8,14 @@ async function getUsersDB() {
     return data
 }
 
-async function getUsersByIdDB(id) {
+async function getUsersByIdDB(id:number): Promise<iUser[]> {
     const client = await pool.connect()
     const sql = 'select * from users where id=$1'
     const data = (await client.query(sql, [id])).rows
     return data
 }
 
-async function updateUsersDB(id, name, surname, email, pwd, status) {
+async function updateUsersDB(id:number, name:string, surname:string, email:string, pwd:string, status:number): Promise<iUser[]> {
     const client = await pool.connect()
     try {
         client.query("BEGIN")
@@ -25,12 +25,12 @@ async function updateUsersDB(id, name, surname, email, pwd, status) {
         return data
     } catch (error) {
         client.query("ROLLBACK")
-        console.log(error.message);
+        console.log(error);
         return []
     }
 }
 
-async function deleteUsersDB(id) {
+async function deleteUsersDB(id:number): Promise<iUser[]> {
     const client = await pool.connect()
     try {
         client.query("BEGIN")
@@ -40,10 +40,10 @@ async function deleteUsersDB(id) {
         return data
     } catch (error) {
         client.query("ROLLBACK")
-        console.log(error.message);
+        console.log(error);
         return []
     }
 }
 
 
-module.exports = { getUsersDB, getUsersByIdDB, updateUsersDB, deleteUsersDB }
+export { getUsersDB, getUsersByIdDB, updateUsersDB, deleteUsersDB }
